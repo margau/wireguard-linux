@@ -66,7 +66,7 @@ struct packet_cb {
 #define PACKET_PEER(skb) (PACKET_CB(skb)->keypair->entry.peer)
 
 /* Returns either the correct skb->protocol value, or 0 if invalid. */
-static inline __be16 wg_examine_packet_protocol(struct sk_buff *skb)
+static inline __be16 wg_examine_packet_protocol(const struct sk_buff *skb)
 {
 	if (skb_network_header(skb) >= skb->head &&
 	    (skb_network_header(skb) + sizeof(struct iphdr)) <=

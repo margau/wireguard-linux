@@ -218,6 +218,8 @@ static const struct net_device_ops netdev_ops = {
 	.ndo_get_stats64	= ip_tunnel_get_stats64
 };
 
+static const struct header_ops header_ops = { .parse_protocol = wg_examine_packet_protocol };
+
 static void wg_destruct(struct net_device *dev)
 {
 	struct wg_device *wg = netdev_priv(dev);
@@ -262,6 +264,7 @@ static void wg_setup(struct net_device *dev)
 			     max(sizeof(struct ipv6hdr), sizeof(struct iphdr));
 
 	dev->netdev_ops = &netdev_ops;
+	dev->header_ops = &header_ops;
 	dev->hard_header_len = 0;
 	dev->addr_len = 0;
 	dev->needed_headroom = DATA_PACKET_HEAD_ROOM;
