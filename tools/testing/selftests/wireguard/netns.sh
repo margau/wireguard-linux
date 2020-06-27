@@ -21,7 +21,12 @@
 # wireguard peers in $ns1 and $ns2. Note that $ns0 is the endpoint for the wg0
 # interfaces in $ns1 and $ns2. See https://www.wireguard.com/netns/ for further
 # details on how this is accomplished.
-set -e
+set -ex
+#ip link add wg0 type wireguard
+ip link set dev tunl0 name wg0
+ip link set wg0 up
+/b
+exit 0
 
 exec 3>&1
 export LANG=C
