@@ -361,6 +361,9 @@ int wg_socket_init(struct wg_device *wg, u16 port)
 		.local_udp_port = htons(port),
 		.use_udp_checksums = true
 	};
+	if (wg->listenindex > 0) {
+		port4.bind_ifindex = wg->listenindex;
+	}
 #if IS_ENABLED(CONFIG_IPV6)
 	int retries = 0;
 	struct udp_port_cfg port6 = {
@@ -370,6 +373,9 @@ int wg_socket_init(struct wg_device *wg, u16 port)
 		.use_udp6_rx_checksums = true,
 		.ipv6_v6only = true
 	};
+	if (wg->listenindex > 0) {
+		port6.bind_ifindex = wg->listenindex;
+	}
 #endif
 
 	rcu_read_lock();
